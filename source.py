@@ -31,14 +31,20 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+import time
 
 PATH = "/home/blaise/Downloads/chromeDriver/chromedriver"
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 driver.get("https://www.tiktok.com/")
+driver.refresh()
+driver.refresh()
+driver.refresh()
 
 search = driver.find_elements(By.TAG_NAME, 'strong')
+
+time.sleep(10)
 
 for i in search:
     print(i.text)
