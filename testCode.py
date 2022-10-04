@@ -34,6 +34,8 @@ try:
         if (stringToBeSearched[i:i+11] == 'href="https'):
             print(stringToBeSearched[i:i+100])
 
+    nextLink = "/scholar?"
+
 
 
     #webpages = main.find_element(By.TAG_NAME, 'body')

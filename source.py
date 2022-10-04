@@ -9,7 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 
-class webScraper:
+class WebScraper:
     
     def __init__(self):
         pass
@@ -23,10 +23,13 @@ class webScraper:
         search = driver.find_element(By.ID, 'gs_hdr_tsi')
         
         search.send_keys(searchTerm)
+        search.send_keys(Keys.RETURN)
 
-        count = 0
+        count = 1
 
         listOfLinks = []
+
+        nextPageLink = ""
 
         for page in range(0, numberOfPages):
 
@@ -42,13 +45,13 @@ class webScraper:
 
                     if (pageToBeSearched[i:i+11] == 'href="https'):
                         
-                        iterator = i+7
+                        iterator = i+6
 
                         currentString = ""
 
-                        while (pageToBeSearched[i] != '"'):
+                        while (pageToBeSearched[iterator] != '"'):
 
-                            currentString += pageToBeSearched[i]
+                            currentString += pageToBeSearched[iterator]
                             iterator += 1
 
                         listOfLinks.append(currentString)
@@ -57,15 +60,30 @@ class webScraper:
                 print("An Error Occurred Loading Website!")
                 driver.quit()
 
-        
+            count += 1
 
-        
+            nextPage = driver.find_element(By.LINK_TEXT, str(count))
+            nextPage.click()
+
+            #nextPageLink = "/scholar?start=" + str(count) + "&q=" + searchTerm + "&h1=en&as_sdt=0,6"
+
+            #driver.get(nextPageLink)
+
 
         driver.quit()
+
+        return listOfLinks
 
     def obtainDataFromLinks(self, listOfLinks):
         pass
 
+
+testObject = WebScraper()
+
+listOfLinks = testObject.getLinks("astronomy", 2)
+
+for i in listOfLinks:
+    print(i)
 
 
 
